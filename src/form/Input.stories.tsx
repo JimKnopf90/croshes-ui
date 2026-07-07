@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/16/solid';
+import { Description, ErrorMessage, Field, Label } from './Field';
 import { Input, InputGroup } from './Input';
 
 const meta: Meta<typeof Input> = {
@@ -54,4 +55,22 @@ export const MitBeschreibung: Story = {
 
 export const MitFehler: Story = {
   args: { label: 'Chip-Nummer', required: true, defaultValue: '276-abc', error: 'Die Chip-Nummer darf nur Ziffern enthalten.' },
+};
+
+/**
+ * Für eigenes Markup lassen sich `Field`, `Label`, `Description` und
+ * `ErrorMessage` frei komponieren — die Komfort-Props des Inputs rendern
+ * intern exakt dieselben Bausteine.
+ */
+export const FreiKomponiert: Story = {
+  render: () => (
+    <div className="max-w-xs">
+      <Field>
+        <Label required>Chip-Nummer</Label>
+        <Description>15-stellige Nummer vom Transponder.</Description>
+        <Input name="chip" invalid defaultValue="276-abc" />
+        <ErrorMessage>Die Chip-Nummer darf nur Ziffern enthalten.</ErrorMessage>
+      </Field>
+    </div>
+  ),
 };
