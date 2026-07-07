@@ -1,94 +1,56 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PlusIcon } from '@heroicons/react/16/solid';
-import { Button, ButtonColor } from './Button';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Aktionen/Button',
+  title: 'Button/Button',
   component: Button,
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'ghost', 'danger', 'success', 'warning'],
+    },
+  },
 };
 export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-const ALLE_FARBEN: ButtonColor[] = [
-  'dark/zinc',
-  'light',
-  'dark/white',
-  'dark',
-  'white',
-  'zinc',
-  'indigo',
-  'cyan',
-  'red',
-  'orange',
-  'amber',
-  'yellow',
-  'lime',
-  'green',
-  'emerald',
-  'teal',
-  'sky',
-  'blue',
-  'violet',
-  'purple',
-  'fuchsia',
-  'pink',
-  'rose',
-];
+export const Primary: Story = { args: { variant: 'primary', children: 'Speichern' } };
 
-export const Standard: Story = {
-  args: { children: 'Speichern' },
-};
-
-export const AlleFarben: Story = {
+/** Die sechs semantischen Varianten — mehr gibt es bewusst nicht. */
+export const AlleVarianten: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-2">
-      {ALLE_FARBEN.map((color) => (
-        <Button key={color} color={color}>
-          {color}
-        </Button>
-      ))}
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="primary">Speichern</Button>
+      <Button variant="secondary">Abbrechen</Button>
+      <Button variant="ghost">Zurücksetzen</Button>
+      <Button variant="danger">Löschen</Button>
+      <Button variant="success">Genehmigen</Button>
+      <Button variant="warning">Trotzdem buchen</Button>
     </div>
   ),
 };
 
-export const Outline: Story = {
-  args: { outline: true, children: 'Abbrechen' },
-};
-
-export const Plain: Story = {
-  args: { plain: true, children: 'Mehr anzeigen' },
-};
-
 export const Deaktiviert: Story = {
   render: () => (
-    <div className="flex items-center gap-2">
-      <Button color="purple" disabled>
-        Deaktiviert
-      </Button>
-      <Button outline disabled>
-        Deaktiviert
-      </Button>
-      <Button plain disabled>
-        Deaktiviert
-      </Button>
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="primary" disabled>Speichern</Button>
+      <Button variant="secondary" disabled>Abbrechen</Button>
+      <Button variant="danger" disabled>Löschen</Button>
     </div>
   ),
 };
 
 export const MitIcon: Story = {
   render: () => (
-    <Button color="purple">
-      <PlusIcon data-slot="icon" />
-      Neu anlegen
+    <Button variant="primary">
+      <PlusCircleIcon data-slot="icon" />
+      Angebot erstellen
     </Button>
   ),
 };
 
 export const AlsLink: Story = {
-  render: () => (
-    <Button href="https://alpaka.pro" target="_blank" color="purple">
-      Zur Website
-    </Button>
-  ),
+  args: { variant: 'secondary', href: 'https://example.com', children: 'Zur Buchungsseite' },
 };

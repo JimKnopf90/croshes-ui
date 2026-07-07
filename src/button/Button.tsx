@@ -154,33 +154,81 @@ const styles = {
       'text-white [--btn-hover-overlay:theme(colors.white/10%)] [--btn-bg:theme(colors.rose.500)] [--btn-border:theme(colors.rose.600/90%)]',
       '[--btn-icon:theme(colors.rose.300)] data-[active]:[--btn-icon:theme(colors.rose.200)] data-[hover]:[--btn-icon:theme(colors.rose.200)]',
     ],
+    primary: [
+      'text-white [--btn-hover-overlay:theme(colors.white/10%)] [--btn-bg:theme(colors.primary.600)] [--btn-border:theme(colors.primary.700/90%)]',
+      '[--btn-icon:theme(colors.primary.300)] data-[active]:[--btn-icon:theme(colors.primary.200)] data-[hover]:[--btn-icon:theme(colors.primary.200)]',
+    ],
   },
+}
+
+/**
+ * Semantische Button-Varianten — die kanonische API des Design-Systems.
+ * Buttons werden nach BEDEUTUNG gewählt, nicht nach Farbe:
+ * - primary:   die EINE Hauptaktion einer View (Speichern, Erstellen)
+ * - secondary: Nebenaktionen (Abbrechen, Schließen)
+ * - ghost:     tertiäre Aktionen (Links, Reset)
+ * - danger:    destruktive Aktionen (Löschen, Stornieren)
+ * - success:   bestätigende Aktionen (Genehmigen)
+ * - warning:   Aktionen mit Vorsicht (Überbuchen erzwingen)
+ */
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'warning'
+
+const variantStyles: Record<ButtonVariant, string | string[]> = {
+  primary: clsx(styles.solid, styles.colors.primary),
+  secondary: clsx(styles.outline),
+  ghost: clsx(styles.plain),
+  danger: clsx(styles.solid, styles.colors.red),
+  success: clsx(styles.solid, styles.colors.green),
+  warning: clsx(styles.solid, styles.colors.amber),
 }
 
 /** Verfügbare Farbvarianten des Buttons. */
 export type ButtonColor = keyof typeof styles.colors
 
 export type ButtonProps = (
-  | { color?: ButtonColor; outline?: never; plain?: never }
-  | { color?: never; outline: true; plain?: never }
-  | { color?: never; outline?: never; plain: true }
+  | { variant?: ButtonVariant; color?: never; outline?: never; plain?: never }
+  | {
+      variant?: never;
+      /** @deprecated Semantische `variant`-Prop verwenden (primary/secondary/ghost/danger/success/warning). */
+      color?: ButtonColor;
+      outline?: never;
+      plain?: never;
+    }
+  | {
+      variant?: never;
+      color?: never;
+      /** @deprecated `variant="secondary"` verwenden. */
+      outline: true;
+      plain?: never;
+    }
+  | {
+      variant?: never;
+      color?: never;
+      outline?: never;
+      /** @deprecated `variant="ghost"` verwenden. */
+      plain: true;
+    }
 ) & { className?: string; children: React.ReactNode } & (
     | Omit<Headless.ButtonProps, 'as' | 'className'>
     | (Omit<React.ComponentPropsWithoutRef<'a'>, 'className'> & { href: string })
   )
 
 /**
- * Standard-Button des Design-Systems (solid mit Farbvarianten, outline oder plain).
- * Mit gesetztem `href` wird ein natives `<a>` gerendert (framework-agnostisch).
+ * Standard-Button des Design-Systems. Kanonische API ist die semantische
+ * `variant`-Prop (Standard: "primary"); die Farb-API (`color`/`outline`/`plain`)
+ * ist deprecated. Mit gesetztem `href` wird ein natives `<a>` gerendert.
  */
 export const Button = forwardRef(function Button(
-  { color, outline, plain, className, children, ...props }: ButtonProps,
+  { variant, color, outline, plain, className, children, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {
   const getButtonStyle = () => {
+    if (variant) return variantStyles[variant];
+    // Deprecated Farb-API (Abwärtskompatibilität, Entfernung in v1.0)
     if (outline) return styles.outline;
     if (plain) return styles.plain;
-    return clsx(styles.solid, styles.colors[color ?? 'dark/zinc']);
+    if (color) return clsx(styles.solid, styles.colors[color]);
+    return variantStyles.primary;
   };
 
   const classes = clsx(

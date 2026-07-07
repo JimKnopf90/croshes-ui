@@ -3,7 +3,7 @@ export type { BadgeConfig, BadgeProps, BadgeSize } from './badge/Badge';
 export { EmptyState } from './empty-state/EmptyState';
 export type { EmptyStateProps } from './empty-state/EmptyState';
 export { Button, TouchTarget } from './button/Button';
-export type { ButtonColor, ButtonProps } from './button/Button';
+export type { ButtonVariant, ButtonColor, ButtonProps } from './button/Button';
 export { Spinner } from './spinner/Spinner';
 export type { SpinnerProps } from './spinner/Spinner';
 export { CenteredSpinner } from './spinner/CenteredSpinner';

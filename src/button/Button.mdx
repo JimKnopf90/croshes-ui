@@ -1,0 +1,31 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Buttons werden nach **Bedeutung** gewählt, nicht nach Farbe. Es gibt genau
+sechs Varianten — bewusst nicht mehr:
+
+| Variante | Verwendung | Beispiel |
+|---|---|---|
+| `primary` | Die **eine** Hauptaktion einer View/eines Modals | Speichern, Erstellen |
+| `secondary` | Nebenaktionen | Abbrechen, Schließen |
+| `ghost` | Tertiäre Aktionen | Zurücksetzen, Links |
+| `danger` | Destruktive Aktionen | Löschen, Stornieren |
+| `success` | Bestätigende Aktionen | Genehmigen |
+| `warning` | Aktionen mit Vorsicht | Überbuchen erzwingen |
+
+<Canvas of={ButtonStories.AlleVarianten} />
+
+## Regeln
+
+- **Nur ein `primary`-Button pro View/Modal.** Er markiert die Hauptaktion.
+- `danger` immer mit Bestätigungsdialog kombinieren (siehe `DeleteModal`).
+- Keine rohen `<button className="...">` in Feature-Code — immer diese Komponente.
+
+## Deprecated
+
+Die Farb-API (`color="indigo"`, `outline`, `plain`, …) existiert nur noch für
+die Migration und wird in v1.0 entfernt. Neue Aufrufe nutzen ausschließlich `variant`.
