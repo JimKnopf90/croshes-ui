@@ -32,6 +32,18 @@ export type { TabListProps, TabPanelProps, TabPanelsProps, TabProps, TabsProps }
 export { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from './table/Table';
 export { ToastProvider, useToast } from './toast/Toast';
 export type { ToastOptions, ToastVariant } from './toast/Toast';
+export { IconButton } from './button/IconButton';
+export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './button/IconButton';
+export { Link } from './link/Link';
+export type { LinkProps } from './link/Link';
+export { Breadcrumb } from './breadcrumb/Breadcrumb';
+export type { BreadcrumbItem, BreadcrumbProps } from './breadcrumb/Breadcrumb';
+export { Search } from './form/Search';
+export type { SearchProps } from './form/Search';
+export { Alert } from './alert/Alert';
+export type { AlertProps, AlertVariant } from './alert/Alert';
+export { Description, ErrorMessage, Field, Label } from './form/Field';
+export type { DescriptionProps, ErrorMessageProps, FieldProps, LabelProps } from './form/Field';
 export { NumberField } from './form/NumberField';
 export type { NumberFieldProps } from './form/NumberField';
 export { MultiSelectListbox } from './form/MultiSelectListbox';

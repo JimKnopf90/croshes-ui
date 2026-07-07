@@ -208,7 +208,12 @@ export type ButtonProps = (
       /** @deprecated `variant="ghost"` verwenden. */
       plain: true;
     }
-) & { className?: string; children: React.ReactNode } & (
+) & {
+  className?: string;
+  children: React.ReactNode;
+  /** Zeigt einen Spinner vor dem Label und deaktiviert den Button. */
+  loading?: boolean;
+} & (
     | Omit<Headless.ButtonProps, 'as' | 'className'>
     | (Omit<React.ComponentPropsWithoutRef<'a'>, 'className'> & { href: string })
   )
@@ -218,8 +223,16 @@ export type ButtonProps = (
  * `variant`-Prop (Standard: "primary"); die Farb-API (`color`/`outline`/`plain`)
  * ist deprecated. Mit gesetztem `href` wird ein natives `<a>` gerendert.
  */
+/** Kleiner Inline-Spinner für den Button-`loading`-Zustand; erbt Größe/Farbe über den Icon-Slot. */
+const ButtonSpinner = () => (
+  <svg data-slot="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="animate-spin">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.25" strokeWidth="4" />
+    <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+)
+
 export const Button = forwardRef(function Button(
-  { variant, color, outline, plain, className, children, ...props }: ButtonProps,
+  { variant, color, outline, plain, className, children, loading = false, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {
   const getButtonStyle = () => {
@@ -239,10 +252,17 @@ export const Button = forwardRef(function Button(
 
   return 'href' in props ? (
     <a {...props} className={classes} ref={ref as React.ForwardedRef<HTMLAnchorElement>}>
+      {loading && <ButtonSpinner />}
       <TouchTarget>{children}</TouchTarget>
     </a>
   ) : (
-    <Headless.Button {...props} className={clsx(classes, 'cursor-default')} ref={ref}>
+    <Headless.Button
+      {...props}
+      disabled={loading || (props as Headless.ButtonProps).disabled}
+      className={clsx(classes, 'cursor-default')}
+      ref={ref}
+    >
+      {loading && <ButtonSpinner />}
       <TouchTarget>{children}</TouchTarget>
     </Headless.Button>
   )

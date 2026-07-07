@@ -54,3 +54,13 @@ export const MitIcon: Story = {
 export const AlsLink: Story = {
   args: { variant: 'secondary', href: 'https://example.com', children: 'Zur Buchungsseite' },
 };
+
+export const Loading: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="primary" loading>Speichern…</Button>
+      <Button variant="secondary" loading>Laden…</Button>
+      <Button variant="danger" loading>Löschen…</Button>
+    </div>
+  ),
+};

@@ -46,7 +46,7 @@ export const Input = forwardRef(function Input(
 ) {
   const { value, defaultValue, ...rest } = props
   return (
-    <div className="input-wrapper">
+    <div data-slot="control" className="input-wrapper">
       {label && (
         <label className="block text-sm/6 font-medium text-gray-900 dark:text-white">
           {label}{' '}
@@ -60,7 +60,8 @@ export const Input = forwardRef(function Input(
         data-slot="control"
         className={clsx(
           className,
-          'relative block w-full mt-2',
+          'relative block w-full',
+          label && 'mt-2',
           'before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow',
           'dark:before:hidden',
           'after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500',
