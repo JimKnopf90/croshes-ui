@@ -47,3 +47,11 @@ export const MitIcon: Story = {
     </div>
   ),
 };
+
+export const MitBeschreibung: Story = {
+  args: { label: 'Chip-Nummer', description: '15-stellige Nummer vom Transponder.' },
+};
+
+export const MitFehler: Story = {
+  args: { label: 'Chip-Nummer', required: true, defaultValue: '276-abc', error: 'Die Chip-Nummer darf nur Ziffern enthalten.' },
+};
