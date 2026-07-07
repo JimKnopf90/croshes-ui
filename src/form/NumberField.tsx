@@ -1,50 +1,36 @@
-import React, { ChangeEventHandler } from 'react';
+import clsx from 'clsx'
+import React from 'react'
+import { Input, InputProps } from './Input'
 
-export interface NumberFieldProps {
-  /** Sichtbarer Beschriftungstext über dem Feld. */
-  label: string;
-  id: string;
-  value?: string;
-  /** Optionaler Hinweistext unter dem Feld. */
-  hintText?: string;
-  readonly?: boolean;
-  min?: number;
-  max?: number;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+export type NumberFieldProps = Omit<InputProps, 'type'> & {
+  /** @deprecated `description` verwenden. */
+  hintText?: string
+  min?: number
+  max?: number
 }
 
-/** Zahleneingabefeld ohne Spin-Buttons; blockiert die Eingabe von "e", "-" und "+". */
-export const NumberField = ({ label, id, value, onChange, hintText, min, max, readonly = false }: NumberFieldProps) => {
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "e" || event.key === "-" || event.key === "+") {
-      event.preventDefault();
+/**
+ * Zahleneingabefeld im Input-Look, ohne Spin-Buttons; blockiert die Eingabe
+ * von "e", "-" und "+". Alle Input-Props (label, description, error, …) verfügbar.
+ */
+export const NumberField = ({ hintText, description, className, onKeyDown, ...props }: NumberFieldProps) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'e' || event.key === '-' || event.key === '+') {
+      event.preventDefault()
     }
+    onKeyDown?.(event)
   }
 
   return (
-    <div>
-      <label htmlFor={id} className="block mb-2 text-xs font-medium uppercase">
-        <span className="text-dark-blue dark:text-dark">
-          {label}
-        </span>
-      </label>
-      <input
-        className="bg-white border text-dark-blue dark:bg-dark dark:text-dark  text-sm rounded w-full p-2.5 focus:outline outline-1 outline-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none read-only:bg-gray-50 read-only:outline-none"
-        type={"number"}
-        readOnly={readonly}
-        min={min}
-        max={max}
-        value={value}
-        id={id}
-        onChange={onChange}
-        onKeyDown={handleKeyPress}
-      />
-      {hintText !== undefined &&
-        <div className="text-xs text-primary absolute tracking-wide pt-0.5">
-          {hintText}
-        </div>
-      }
-    </div>
+    <Input
+      type="number"
+      {...props}
+      description={description ?? hintText}
+      onKeyDown={handleKeyDown}
+      className={clsx(
+        className,
+        '[&_input]:[appearance:textfield] [&_input::-webkit-outer-spin-button]:appearance-none [&_input::-webkit-inner-spin-button]:appearance-none'
+      )}
+    />
   )
 }
