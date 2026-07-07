@@ -30,6 +30,20 @@ import { Button, Badge, EmptyState, Spinner } from 'croshes-ui';
 <Button color="purple">Speichern</Button>
 ```
 
+Wer `DatePicker`/`DatePickerRange` nutzt, muss einmal global die Styles von
+react-day-picker importieren (z.B. in `_app.tsx` bzw. `layout.tsx`):
+
+```ts
+import 'react-day-picker/style.css';
+```
+
+Toasts benötigen einen `ToastProvider` um die App; ausgelöst wird über den Hook:
+
+```tsx
+const { toast } = useToast();
+toast({ title: 'Gespeichert', variant: 'success' });
+```
+
 ## Komponenten-Katalog
 
 Storybook lokal starten:

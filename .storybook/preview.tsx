@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react';
 import { withThemeByClassName } from '@storybook/addon-themes';
+import 'react-day-picker/style.css';
 import './tailwind.css';
 
 const preview: Preview = {
