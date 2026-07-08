@@ -64,3 +64,20 @@ export const Loading: Story = {
     </div>
   ),
 };
+
+export const Pill: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="secondary" shape="pill">
+        Bestandsregister
+      </Button>
+      <Button variant="primary" shape="pill">
+        <PlusCircleIcon data-slot="icon" />
+        Exportieren
+      </Button>
+      <Button variant="primary" shape="pill" loading>
+        Exportieren…
+      </Button>
+    </div>
+  ),
+};
