@@ -68,8 +68,6 @@ export { Pagination } from './pagination/Pagination';
 export type { PaginationProps } from './pagination/Pagination';
 export { Modal } from './modal/Modal';
 export type { ModalProps } from './modal/Modal';
-export { DeleteModal } from './modal/DeleteModal';
-export type { DeleteModalProps } from './modal/DeleteModal';
 export { Card } from './card/Card';
 export type { CardProps } from './card/Card';
 export { CardTitle } from './card/CardTitle';

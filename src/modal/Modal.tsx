@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, Transition, DialogTitle, DialogPanel } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Button, ButtonColor } from '../button/Button';
+import { Button, ButtonColor, ButtonVariant } from '../button/Button';
 
 export interface ModalProps {
   isVisible: boolean;
@@ -11,16 +11,24 @@ export interface ModalProps {
   onClose: () => void;
   onConfirm?: () => void;
   confirmText?: string;
+  /** Semantische Variante des Bestätigen-Buttons; "danger" für destruktive Dialoge (Löschen). */
+  confirmVariant?: ButtonVariant;
+  /** @deprecated `confirmVariant` verwenden. */
   confirmColor?: ButtonColor;
   cancelText?: string;
   disableConfirm?: boolean;
+  /** Zeigt einen Spinner im Bestätigen-Button (z.B. während des Speicherns). */
+  confirmLoading?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
   hideFooter?: boolean;
   /** Erlaubt sichtbaren Overflow (nützlich für Dropdowns/Selektoren im Modal). */
   overflowVisible?: boolean;
 }
 
-/** Standard-Dialog mit Header, scrollbarem Inhalt und Bestätigen/Abbrechen-Footer. */
+/**
+ * Standard-Dialog mit Header, scrollbarem Inhalt und Bestätigen/Abbrechen-Footer.
+ * Für Löschbestätigungen `confirmVariant="danger"` setzen (ersetzt das frühere DeleteModal).
+ */
 export const Modal: React.FC<ModalProps> = ({
   isVisible,
   title,
@@ -29,9 +37,11 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   onConfirm,
   confirmText = 'Bestätigen',
-  confirmColor = 'purple',
+  confirmVariant = 'primary',
+  confirmColor,
   cancelText = 'Abbrechen',
   disableConfirm = false,
+  confirmLoading = false,
   hideFooter = false,
   size = 'md',
   overflowVisible = false,
@@ -86,7 +96,7 @@ export const Modal: React.FC<ModalProps> = ({
                 <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 dark:border-zinc-800 bg-gray-50/50 dark:bg-zinc-800/30">
                   <Button
                     onClick={onClose}
-                    outline
+                    variant="secondary"
                   >
                     {cancelText}
                   </Button>
@@ -94,7 +104,8 @@ export const Modal: React.FC<ModalProps> = ({
                     <Button
                       onClick={onConfirm}
                       disabled={disableConfirm}
-                      color={confirmColor}
+                      loading={confirmLoading}
+                      {...(confirmColor ? { color: confirmColor } : { variant: confirmVariant })}
                     >
                       {confirmText}
                     </Button>

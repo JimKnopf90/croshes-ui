@@ -15,7 +15,7 @@ const ModalBeispiel = (props: Partial<React.ComponentProps<typeof Modal>>) => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button color="purple" onClick={() => setOpen(true)}>
+      <Button onClick={() => setOpen(true)}>
         Modal öffnen
       </Button>
       <Modal
@@ -49,4 +49,17 @@ export const OhneFooter: Story = {
 
 export const ConfirmDeaktiviert: Story = {
   render: () => <ModalBeispiel disableConfirm confirmText="Speichern" />,
+};
+
+/** Löschbestätigung — ersetzt das frühere DeleteModal. */
+export const Loeschbestaetigung: Story = {
+  render: () => (
+    <ModalBeispiel title="Löschen" confirmText="Löschen" confirmVariant="danger">
+      <p className="text-sm text-gray-700 dark:text-gray-300">Eintrag wirklich löschen?</p>
+    </ModalBeispiel>
+  ),
+};
+
+export const ConfirmLaedt: Story = {
+  render: () => <ModalBeispiel confirmText="Speichern…" confirmLoading />,
 };
