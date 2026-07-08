@@ -3,27 +3,27 @@ import clsx from 'clsx'
 import React from 'react'
 import { Button } from '../button/Button'
 
-/** Container des Dropdowns; enthält `DropdownButton` und `DropdownMenu`. */
-export const Dropdown = (props: Headless.MenuProps) => <Headless.Menu {...props} />
+/** Container des Menüs; enthält `MenuButton` und `MenuItems`. */
+export const Menu = (props: Headless.MenuProps) => <Headless.Menu {...props} />
 
-export type DropdownButtonProps = {
+export type MenuButtonProps = {
   /** Gerenderte Komponente, Default: Button (z.B. auch IconButton). */
   as?: React.ElementType
 } & Omit<Headless.MenuButtonProps, 'as'> &
   Record<string, unknown>
 
-/** Auslöser des Dropdowns; rendert standardmäßig den Design-System-Button. */
-export const DropdownButton = ({ as = Button, ...props }: DropdownButtonProps) => (
+/** Auslöser des Menüs; rendert standardmäßig den Design-System-Button. */
+export const MenuButton = ({ as = Button, ...props }: MenuButtonProps) => (
   <Headless.MenuButton as={as} {...props} />
 )
 
-export type DropdownMenuProps = {
+export type MenuItemsProps = {
   className?: string
   anchor?: Headless.MenuItemsProps['anchor']
 } & Omit<Headless.MenuItemsProps, 'as' | 'className' | 'anchor'>
 
 /** Aufklappende Liste der Menüeinträge. Breite via className erweiterbar (z.B. `w-80`). */
-export const DropdownMenu = ({ className, anchor = 'bottom end', ...props }: DropdownMenuProps) => (
+export const MenuItems = ({ className, anchor = 'bottom end', ...props }: MenuItemsProps) => (
   <Headless.MenuItems
     transition
     anchor={anchor}
@@ -37,7 +37,7 @@ export const DropdownMenu = ({ className, anchor = 'bottom end', ...props }: Dro
   />
 )
 
-export type DropdownItemProps = {
+export type MenuItemProps = {
   className?: string
   /** Roter Eintrag für destruktive Aktionen (z.B. Löschen). */
   destructive?: boolean
@@ -49,7 +49,7 @@ export type DropdownItemProps = {
   )
 
 /** Einzelner Menüeintrag; mit `href` als Link, sonst als Button. */
-export const DropdownItem = ({ className, destructive = false, disabled, children, ...props }: DropdownItemProps) => {
+export const MenuItem = ({ className, destructive = false, disabled, children, ...props }: MenuItemProps) => {
   const classes = clsx(
     className,
     'group flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors',
@@ -74,12 +74,12 @@ export const DropdownItem = ({ className, destructive = false, disabled, childre
 }
 
 /** Titel eines Menüeintrags. */
-export const DropdownLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) => (
+export const MenuLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) => (
   <div data-slot="label" {...props} className={clsx(className, 'text-gray-900 dark:text-white')} />
 )
 
 /** Grauer Untertitel unterhalb des Labels (macht den Eintrag „reich"). */
-export const DropdownDescription = ({ className, ...props }: React.ComponentPropsWithoutRef<'p'>) => (
+export const MenuDescription = ({ className, ...props }: React.ComponentPropsWithoutRef<'p'>) => (
   <p
     data-slot="description"
     {...props}
@@ -88,7 +88,7 @@ export const DropdownDescription = ({ className, ...props }: React.ComponentProp
 )
 
 /** Icon-Kachel für reiche Menüeinträge (Icon mit farbigem Hintergrund). */
-export const DropdownIconTile = ({ className, ...props }: React.ComponentPropsWithoutRef<'span'>) => (
+export const MenuIconTile = ({ className, ...props }: React.ComponentPropsWithoutRef<'span'>) => (
   <span
     data-slot="icon-tile"
     {...props}
@@ -103,7 +103,7 @@ export const DropdownIconTile = ({ className, ...props }: React.ComponentPropsWi
 )
 
 /** Trennlinie zwischen Menü-Gruppen. */
-export const DropdownDivider = ({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) => (
+export const MenuDivider = ({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) => (
   <div
     {...props}
     role="separator"
