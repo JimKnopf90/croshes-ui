@@ -57,6 +57,17 @@ module.exports = {
         dark: '#1F1F1F',
         'dark-focus': '#DBDBDB',
       },
+      keyframes: {
+        'fade-in': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+      },
+      animation: {
+        // Ladeindikatoren erst nach kurzer Verzögerung einblenden —
+        // verhindert Spinner-Aufblitzen bei schnellen Antworten (Cache-Hits).
+        'spinner-delayed': 'fade-in 150ms ease-out 250ms both',
+      },
     },
   },
   plugins: [],

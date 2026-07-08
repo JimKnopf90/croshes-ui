@@ -15,9 +15,13 @@ export interface SpinnerProps {
   className?: string
 }
 
-/** Ladeindikator (rotierender Kreis) in drei Größen; Zentrierung übernimmt der umgebende Container. */
+/**
+ * Ladeindikator (rotierender Kreis) in drei Größen; Zentrierung übernimmt der
+ * umgebende Container. Blendet sich erst nach ~250ms ein, damit bei schnellen
+ * Antworten (Cache-Hits) kein Spinner aufblitzt.
+ */
 export const Spinner = ({ size = 'md', className }: SpinnerProps) => (
-  <div role="status" className={clsx(className, 'flex items-center justify-center')}>
+  <div role="status" className={clsx(className, 'flex items-center justify-center animate-spinner-delayed')}>
     <svg
       aria-hidden="true"
       className={clsx(sizeClasses[size], 'animate-spin text-gray-200 dark:text-gray-600 fill-primary')}
