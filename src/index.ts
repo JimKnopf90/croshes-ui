@@ -47,6 +47,17 @@ export { FilterChip } from './chip/FilterChip';
 export type { FilterChipProps, FilterChipSize } from './chip/FilterChip';
 export { RangeSlider } from './slider/RangeSlider';
 export type { RangeSliderProps } from './slider/RangeSlider';
+export {
+  Dropdown,
+  DropdownButton,
+  DropdownDescription,
+  DropdownDivider,
+  DropdownIconTile,
+  DropdownItem,
+  DropdownLabel,
+  DropdownMenu,
+} from './dropdown/Dropdown';
+export type { DropdownButtonProps, DropdownItemProps, DropdownMenuProps } from './dropdown/Dropdown';
 export { NumberField } from './form/NumberField';
 export type { NumberFieldProps } from './form/NumberField';
 export { MultiSelectListbox } from './form/MultiSelectListbox';
